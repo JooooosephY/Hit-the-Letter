@@ -28,12 +28,14 @@ export function setup() {
 export function draw() {}
 
 function drawPoses(poses) {
+  console.log(poses);
   // Modify the graphics context to flip all remaining drawing horizontally.
   // This makes the image act like a mirror (reversing left and right); this is
   // easier to work with.
   translate(width, 0); // move the left side of the image to the right
   scale(-1.0, 1.0);
-  image(video, 0, 0, video.width, video.height);
+  background("rgba(0, 0, 0, 0.05)");
+  // image(video, 0, 0, video.width, video.height);
   drawKeypoints(poses);
   drawSkeleton(poses);
 }
@@ -57,7 +59,8 @@ function drawSkeleton(poses) {
     pose.skeleton.forEach(skeleton => {
       // skeleton is an array of two keypoints. Extract the keypoints.
       const [p1, p2] = skeleton;
-      stroke(255, 0, 0);
+      stroke(255, 255, 0);
+      strokeWeight(5);
       line(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
     });
   });
