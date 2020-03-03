@@ -278,9 +278,9 @@ function drawPoses(poses) {
 
 
   // display the frameRate
-  fill(255);
-  textSize(13);
-  text( frameRate(), 80, 20 );
+  // fill(255);
+  // textSize(13);
+  // text( frameRate(), 80, 20 );
 }
 
 // Draw ellipses over the detected keypoints
