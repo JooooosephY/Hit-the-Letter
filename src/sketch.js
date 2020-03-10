@@ -11,6 +11,7 @@ let rwx = 0; // rightWrist x positon
 let rwy = 0; // rightWrist y position
 let lwx = 0; // leftWrist x position
 let lwy = 0; // leftWrist y position
+let index = 0; // The index of the alphabet
 
 let goin_b1 = true;
 let goin_b2 = true;
@@ -68,17 +69,27 @@ function drawPoses(poses) {
   pop();
 
   // When the confidence score is more than 0.5, use rightWrist as the parameter
-  if (poses[0].pose.rightWrist.confidence > 0.5){
-    rwy = poses[0].pose.rightWrist.y;
-    rwx = width - poses[0].pose.rightWrist.x;
-  }else{
+  if (poses.length > 0){
+    if (poses[0].pose.rightWrist.confidence > 0.5){
+      rwy = poses[0].pose.rightWrist.y;
+      rwx = width - poses[0].pose.rightWrist.x;
+    }else{
+      rwx = mouseX;
+      rwy = mouseY;
+    }
+  } else{
     rwx = mouseX;
     rwy = mouseY;
   }
 
-  if (poses[0].pose.leftWrist.confidence > 0.5){
-    lwy = poses[0].pose.leftWrist.y;
-    lwx = width - poses[0].pose.leftWrist.x;
+  if (poses.length > 0){
+    if (poses[0].pose.leftWrist.confidence > 0.5){
+      lwy = poses[0].pose.leftWrist.y;
+      lwx = width - poses[0].pose.leftWrist.x;
+    }else{
+      lwx = 0;
+      lwy = 0;
+    }
   } else{
     lwx = 0;
     lwy = 0;
@@ -103,7 +114,7 @@ function drawPoses(poses) {
       text("-Exit-", width/2, sizey1);
 
       // The effect of putting your hand on the Start bar
-      if (sizey0-width/20 <rwy && rwy< sizey0 + width/20 && rwx > width*1/16 && rwx < width * 15/16) {
+      if (sizey0-width/20 < rwy && rwy< sizey0 + width/20 && rwx > width*1/16 && rwx < width * 15/16) {
         if (goin_b1) {
           timer = frameCount;
         }
@@ -153,13 +164,18 @@ function drawPoses(poses) {
     
     // Game page
     case 1:
-      // generate 1 letter per 10 frames
+      // Hint
+      fill(0);
+      textSize(30);
+      text("This is the letter that you should hit now: " + alphabet[index], width/2, 20 );
+
+      // generate 1 letter per 5 frames
       if (count == 0){
-        letters.push( new Letter(random(width), random(0, -100), alphabet[int(random(0,25))]) );
+        letters.push( new Letter(random(width), random(0, -100), alphabet[int(random(index,index + 6))]) );
         count ++;
-      }else if (count < 10){
+      }else if (count < 5){
         count ++;
-      }else if(count == 10){
+      }else if(count == 5){
         count = 0;
       }
 
@@ -170,17 +186,25 @@ function drawPoses(poses) {
         l.updateLifespan();
         l.display();
       }
-
+      
+      console.log(index);
+      
       // detect whether you hit the letter
       for (let i = letters.length-1; i >= 0; i--) {
         if (rwx < letters[i].x + letters[i].size / 2 && rwx > letters[i].x - letters[i].size && rwy < letters[i].y + letters[i].size && rwx > letters[i].x - letters[i].size){
-          letters[i].hit();
-          letters.splice(i, 1);
-          score ++;
+          if (letters[i].txt == alphabet[index]){
+            letters[i].hit();
+            letters.splice(i, 1);
+            score += 100;
+            index ++;
+          }
         } else if (lwx < letters[i].x + letters[i].size / 2 && lwx > letters[i].x - letters[i].size && lwy < letters[i].y + letters[i].size && lwx > letters[i].x - letters[i].size){
-          letters[i].hit();
-          letters.splice(i, 1);
-          score ++;
+          if (letters[i].txt == alphabet[index]){
+            letters[i].hit();
+            letters.splice(i, 1);
+            score += 100;
+            index ++;
+          }
         }
       }
 
@@ -206,9 +230,15 @@ function drawPoses(poses) {
         }
       }
       
-      if (frameCount - frm > 1000){
+      if (frameCount - frm > 3000){
         ca = 2;
       }
+
+      if (index > 25){
+        ca = 2;
+      }
+
+      
 
       break;
 
@@ -315,6 +345,7 @@ function initialize(){
   hits = [];
   letters = [];
   frm = frameCount;
+  index = 0; 
 }
 
 
@@ -330,7 +361,7 @@ class Letter {
     this.ySpd = random(7, 13);
     this.r = 255;
     this.g = 255;
-    this.b = 255;
+    this.b = 0;
 
     this.txt = txt; 
     // Lifespan of the firework
