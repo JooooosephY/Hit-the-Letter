@@ -191,14 +191,14 @@ function drawPoses(poses) {
       
       // detect whether you hit the letter
       for (let i = letters.length-1; i >= 0; i--) {
-        if (rwx < letters[i].x + letters[i].size / 2 && rwx > letters[i].x - letters[i].size && rwy < letters[i].y + letters[i].size && rwx > letters[i].x - letters[i].size){
+        if (rwx < letters[i].x + letters[i].size / 2 && rwx > letters[i].x - letters[i].size / 2 && rwy < letters[i].y + letters[i].size / 2 && rwx > letters[i].x - letters[i].size / 2){
           if (letters[i].txt == alphabet[index]){
             letters[i].hit();
             letters.splice(i, 1);
             score += 100;
             index ++;
           }
-        } else if (lwx < letters[i].x + letters[i].size / 2 && lwx > letters[i].x - letters[i].size && lwy < letters[i].y + letters[i].size && lwx > letters[i].x - letters[i].size){
+        } else if (lwx < letters[i].x + letters[i].size / 2 && lwx > letters[i].x - letters[i].size / 2 && lwy < letters[i].y + letters[i].size / 2 && lwx > letters[i].x - letters[i].size / 2){
           if (letters[i].txt == alphabet[index]){
             letters[i].hit();
             letters.splice(i, 1);
