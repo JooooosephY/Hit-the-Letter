@@ -12,9 +12,13 @@ let rwy = 0; // rightWrist y position
 let lwx = 0; // leftWrist x position
 let lwy = 0; // leftWrist y position
 let index = 0; // The index of the alphabet
+let time_count = 0;
+let time = 60;
+let model = 1;
 
 let goin_b1 = true;
 let goin_b2 = true;
+let goin_b3 = true;
 let remaining = 0;
 let frm = 0;
 
@@ -28,7 +32,7 @@ function preload() {
 // p5js calls this code once when the page is loaded (and, during development,
 // when the code is modified.)
 export function setup() {
-  createCanvas(1024, 720);
+  createCanvas(windowWidth, windowHeight);
   preload();
   video = select("video") || createCapture(VIDEO);
   video.size(width, height);
@@ -54,6 +58,8 @@ export function draw() {}
 
 function drawPoses(poses) {
   // console.log(poses);
+  console.log(model);
+  
   // Modify the graphics context to flip all remaining drawing horizontally.
   // This makes the image act like a mirror (reversing left and right); this is
   // easier to work with.
@@ -61,8 +67,12 @@ function drawPoses(poses) {
   translate(width, 0); // move the left side of the image to the right
   
   scale(-1.0, 1.0);
-  // background("rgba(0, 0, 0, 0.05)");
-  image(video, 0, 0, video.width, video.height);
+  if (model == 1){
+    background("rgba(0, 0, 0, 100)");
+  }else{
+    image(video, 0, 0, video.width, video.height);
+  }
+  
   
   drawKeypoints(poses);
   drawSkeleton(poses);
@@ -96,14 +106,14 @@ function drawPoses(poses) {
   }
 
   let sizey0 = (height/3)+height/5;
-  let sizey1 = (height/3)+1.8*height/5;
+  let sizey1 = (height/3)+1.7*height/5;
   let sizey2 = (height/3)+2.5*height/5;
   
 
   switch(ca){
     // Start page
     case 0:
-      // Display the Start and Exit
+      // Display the Start, Settings and Exit
       fill(255);
       textSize(int(width/10));
       textAlign(CENTER, CENTER);
@@ -111,21 +121,22 @@ function drawPoses(poses) {
       text("Hit the Letter!", width/2, height/3);      
       textSize(width/25);
       text("-Start-", width/2, sizey0);
-      text("-Exit-", width/2, sizey1);
+      text("-Settings-", width/2, sizey1);
+      text("-Exit-", width/2, sizey2);
 
       // The effect of putting your hand on the Start bar
-      if (sizey0-width/20 < rwy && rwy< sizey0 + width/20 && rwx > width*1/16 && rwx < width * 15/16) {
+      if (sizey0-height/16 < rwy && rwy< sizey0 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
         if (goin_b1) {
           timer = frameCount;
         }
         goin_b1 = false;
         noStroke();
-        fill(0, 50);
+        fill(255, 50);
         rectMode(CENTER);
-        rect(width/2, sizey0, width*7/8, width/10);
+        rect(width/2, sizey0 + 10, width*7/8, height/8);
         remaining = frameCount - timer;
         
-        if (remaining < 160) { // less than 4 seconds, display progress bar
+        if (remaining < 60) { // less than 4 seconds, display progress bar
           fill(255);
           arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
         } else { // enter the game
@@ -137,27 +148,50 @@ function drawPoses(poses) {
       } else {
         goin_b1 = true;
       }
-      
-      // The effect of putting your hand on the Exit bar
-      if ( rwy > sizey1-width/20 && rwy< sizey1 + width/20 && rwx > width*1/16 && rwx < width * 15/16) {
+
+      // The effect of putting your hand on the Setting bar
+      if (sizey1-height/16 < rwy && rwy< sizey1 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
         if (goin_b2) {
           timer = frameCount;
         }
         goin_b2 = false;
         noStroke();
+        fill(0,0,255, 50);
+        rectMode(CENTER);
+        rect(width/2, sizey1 + 10, width*7/8, height/8);
+        remaining = frameCount - timer;
+        
+        if (remaining < 160) { // less than 4 seconds, display progress bar
+          fill(255);
+          arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+        } else { // enter the game
+          ca = 3;
+          goin_b2 = true;
+        }
+      } else {
+        goin_b2 = true;
+      }
+      
+      // The effect of putting your hand on the Exit bar
+      if ( rwy > sizey2-height/16 && rwy< sizey2 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
+        if (goin_b3) {
+          timer = frameCount;
+        }
+        goin_b3 = false;
+        noStroke();
         fill(255, 0, 0, 50);
         rectMode(CENTER);
-        rect(width/2, sizey1, width*7/8, width/10);
+        rect(width/2, sizey2 + 10, width*7/8, height/8);
         remaining = frameCount - timer;
 
-        if (remaining < 160) { // less than 4 seconds, display progress bar
+        if (remaining < 1600) { // less than 4 seconds, display progress bar
           fill(255);
           arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
         } else { // close the window
           window.close();
         }
       } else {
-        goin_b2 = true;
+        goin_b3 = true;
       }
 
       break;
@@ -165,9 +199,22 @@ function drawPoses(poses) {
     // Game page
     case 1:
       // Hint
-      fill(0);
-      textSize(30);
+      fill(255);
+      textSize(25);
       text("This is the letter that you should hit now: " + alphabet[index], width/2, 20 );
+
+      // Time left
+      fill(255);
+      textSize(30);
+      text("Time left: " + time, width / 16, 20);
+      if (time_count == 0){
+        time --;
+        time_count ++;
+      }else if (time_count < 6){
+        time_count ++;
+      }else if (time_count == 6){
+        time_count = 0;
+      }
 
       // generate 1 letter per 5 frames
       if (count == 0){
@@ -187,7 +234,6 @@ function drawPoses(poses) {
         l.display();
       }
       
-      console.log(index);
       
       // detect whether you hit the letter
       for (let i = letters.length-1; i >= 0; i--) {
@@ -230,12 +276,12 @@ function drawPoses(poses) {
         }
       }
       
-      if (frameCount - frm > 3000){
+      if (frameCount - frm > 3350){
         ca = 2;
       }
 
       if (index > 25){
-        ca = 2;
+        index = 0;
       }
 
       
@@ -256,16 +302,17 @@ function drawPoses(poses) {
       textFont(tf);
       text("-Restart-", width/2, sizey1);
       text("-Exit-", width/2, sizey2);
-
-      if ( rwy > sizey1-width/30 && rwy < sizey1 + width/30 && rwx > width*1/16 && rwx < width * 15/16) {
+      
+      // The effect of putting your hand on the Start bar
+      if ( rwy > sizey1-height/16 && rwy < sizey1 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
         if (goin_b1) {
           timer = frameCount;
         }
         goin_b1 = false;
         noStroke();
-        fill(0, 50);
+        fill(255, 50);
         rectMode(CENTER);
-        rect(width/2, sizey1, width*7/8, width/15);
+        rect(width/2, sizey1 + 10, width*7/8, height/8);
         remaining = frameCount - timer;
 
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -280,16 +327,17 @@ function drawPoses(poses) {
       } else {
         goin_b1 = true;
       }
-  
-      if ( rwy > sizey2-width/30 && rwy < sizey2 + width/30 && rwx > width*1/16 && rwx < width * 15/16) {
-        if (goin_b2) {
+      
+      // The effect of putting your hand on the Exit bar
+      if ( rwy > sizey2-height/16 && rwy < sizey2 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
+        if (goin_b3) {
           timer = frameCount;
         }
-        goin_b2 = false;
+        goin_b3 = false;
         noStroke();
         fill(255, 0, 0, 50);
         rectMode(CENTER);
-        rect(width/2, sizey2, width*7/8, width/15);
+        rect(width/2, sizey2 + 10, width*7/8, height/8);
         remaining = frameCount - timer;
 
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -299,7 +347,102 @@ function drawPoses(poses) {
           window.close();
         }
       } else {
-        goin_b2 = true;
+        goin_b3 = true;
+      }
+
+      break;
+    
+    case 3: 
+      // Display the Model 1, Model 2 and Back
+      fill(255);
+      textSize(int(width/10));
+      textAlign(CENTER, CENTER);
+      textFont(tf);
+      text("Recent Model: " + model, width/2, height/3);      
+      textSize(width/25);
+      if (model == 1){
+        fill(255, 50);
+        text("-Model1-", width/2, sizey0);
+        fill(255);
+        text("-Model2-", width/2, sizey1);
+      }else{
+        fill(255);
+        text("-Model1-", width/2, sizey0);
+        fill(255, 50);
+        text("-Model2-", width/2, sizey1);
+      }
+      fill(255);
+      text("-Back-", width/2, sizey2);
+
+      // The effect of putting your hand on the Model1 bar
+      if (model == 2){
+        if (sizey0-height/16 < rwy && rwy< sizey0 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
+          if (goin_b1) {
+            timer = frameCount;
+          }
+          goin_b1 = false;
+          noStroke();
+          fill(255, 50);
+          rectMode(CENTER);
+          rect(width/2, sizey0 + 10, width*7/8, height/8);
+          remaining = frameCount - timer;
+          
+          if (remaining < 100) { // less than 4 seconds, display progress bar
+            fill(255);
+            arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 99, 0, 360)), PIE);
+          } else { // enter the game
+            model = 1;
+          }
+        } else {
+          goin_b1 = true;
+        }
+      }
+
+      // The effect of putting your hand on the Model2 bar
+      if (model == 1){
+        if (sizey1-height/16 < rwy && rwy< sizey1 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
+          if (goin_b2) {
+            timer = frameCount;
+          }
+          goin_b2 = false;
+          noStroke();
+          fill(0,0,255, 50);
+          rectMode(CENTER);
+          rect(width/2, sizey1 + 10, width*7/8, height/8);
+          remaining = frameCount - timer;
+          
+          if (remaining < 100) { // less than 4 seconds, display progress bar
+            fill(255);
+            arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 99, 0, 360)), PIE);
+          } else { // enter the game
+            model = 2;
+          }
+        } else {
+          goin_b2 = true;
+        }
+      }
+      
+      // The effect of putting your hand on the Back bar
+      if ( rwy > sizey2-height/16 && rwy< sizey2 + height/16 && rwx > width*1/16 && rwx < width * 15/16) {
+        if (goin_b3) {
+          timer = frameCount;
+        }
+        goin_b3 = false;
+        noStroke();
+        fill(255, 0, 0, 50);
+        rectMode(CENTER);
+        rect(width/2, sizey2 + 10, width*7/8, height/8);
+        remaining = frameCount - timer;
+
+        if (remaining < 100) { // less than 4 seconds, display progress bar
+          fill(255);
+          arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 99, 0, 360)), PIE);
+        } else { // close the window
+          ca = 0;
+          goin_b3 = true;
+        }
+      } else {
+        goin_b3 = true;
       }
 
       break;
