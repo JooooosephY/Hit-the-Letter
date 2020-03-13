@@ -136,7 +136,7 @@ function drawPoses(poses) {
         rect(width/2, sizey0 + 10, width*7/8, height/8);
         remaining = frameCount - timer;
         
-        if (remaining < 60) { // less than 4 seconds, display progress bar
+        if (remaining < 160) { // less than 4 seconds, display progress bar
           fill(255);
           arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
         } else { // enter the game
@@ -184,7 +184,7 @@ function drawPoses(poses) {
         rect(width/2, sizey2 + 10, width*7/8, height/8);
         remaining = frameCount - timer;
 
-        if (remaining < 1600) { // less than 4 seconds, display progress bar
+        if (remaining < 160) { // less than 4 seconds, display progress bar
           fill(255);
           arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
         } else { // close the window
