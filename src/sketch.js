@@ -303,8 +303,10 @@ if (poses.length > 0){
       fill(200, 100, 100);
       textFont('Comic Sans MS');
       text("The End", width/2, height/3);
-      textSize(width/25);
       fill(255);
+      textSize(30);
+      text("Hins: Move your right wrist to choose.", width/2, 20);
+      textSize(width/25);
       text("Score: " + score, width/2, sizey0);
       text("-Back to Menu-", width/2, sizey1);
       text("-Exit-", width/2, sizey2);
@@ -363,7 +365,9 @@ if (poses.length > 0){
       textSize(int(width/10));
       textAlign(CENTER, CENTER);
       textFont('Comic Sans MS');
-      text("Recent Model: " + model, width/2, height/3);      
+      text("Recent Model: " + model, width/2, height/3);   
+      textSize(30);
+      text("Hins: Move your right wrist to choose.", width/2, 20);   
       textSize(width/25);
       if (model == 1){
         fill(255, 50);
