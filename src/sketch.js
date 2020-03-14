@@ -19,6 +19,7 @@ let goin_b1 = true;
 let goin_b2 = true;
 let goin_b3 = true;
 let remaining = 0;
+let rem = 0;
 let frm = 0;
 
 let score = 0; 
@@ -52,7 +53,6 @@ export function draw() {}
 
 function drawPoses(poses) {
   // console.log(poses);
-  console.log(model);
   
 // When the confidence score is more than 0.5, use rightWrist as the parameter
 if (poses.length > 0){
@@ -116,10 +116,9 @@ if (poses.length > 0){
       // Display the Start, Settings and Exit
       fill(255);
       textAlign(CENTER, CENTER);
-      // textFont(tf);
       textFont('Comic Sans MS');
       textSize(30);
-      text("Hins: Move your right wrist to choose.", width/2, 20);
+      text("Hins: Move your right wrist to choose.", width/2, 30);
       textSize(int(width/10));
       text("Hit the Letter!", width/2, height/3);      
       textSize(width/25);
@@ -143,8 +142,7 @@ if (poses.length > 0){
           fill(255);
           arc(rwx, rwy, 80, 80, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
         } else { // enter the game
-          rwy = 100;
-          ca = 1;
+          ca = 4;
           frm = frameCount;
           goin_b1 = true;
         }
@@ -305,7 +303,7 @@ if (poses.length > 0){
       text("The End", width/2, height/3);
       fill(255);
       textSize(30);
-      text("Hins: Move your right wrist to choose.", width/2, 20);
+      text("Hins: Move your right wrist to choose.", width/2, 30);
       textSize(width/25);
       text("Score: " + score, width/2, sizey0);
       text("-Back to Menu-", width/2, sizey1);
@@ -359,6 +357,7 @@ if (poses.length > 0){
 
       break;
     
+    // Setting page
     case 3: 
       // Display the Model 1, Model 2 and Back
       fill(255);
@@ -367,7 +366,7 @@ if (poses.length > 0){
       textFont('Comic Sans MS');
       text("Recent Model: " + model, width/2, height/3);   
       textSize(30);
-      text("Hins: Move your right wrist to choose.", width/2, 20);   
+      text("Hins: Move your right wrist to choose.", width/2, 30);   
       textSize(width/25);
       if (model == 1){
         fill(255, 50);
@@ -455,6 +454,28 @@ if (poses.length > 0){
       }
 
       break;
+    
+    // Instruction page
+    case 4:
+      rem = frameCount - frm;
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textFont('Comic Sans MS');
+      if (rem <= 300){
+        textSize(40);
+        text("Hit the letters in the sequence of the alphabet.", width/2, height/3);
+      }else if (rem > 300 && rem <= 500){
+        textSize(int(width/15));
+        text("Ready?", width/2, height/3);
+      }else if (rem > 500 && rem <= 600){
+        textSize(int(width/10));
+        text("Start!", width/2, height/3);
+      }else {
+        ca = 1;
+        frm = frameCount;
+      }
+
+      break;
   }
   
 
@@ -476,7 +497,6 @@ function initialize(){
   score = 0;
   hits = [];
   letters = [];
-  frm = frameCount;
   index = 0; 
   time = 60;
 }
