@@ -3,7 +3,6 @@ let video;
 let letters = [];
 let hits = [];
 let alphabet = ["A", "B", "C", "D", "E", "F", 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-let tf;
 let count = 0;
 let ca = 0;
 let timer;
@@ -25,15 +24,10 @@ let frm = 0;
 let score = 0; 
 
 
-function preload() {
-  tf = loadFont('ZaoZiGongFangQiaoPinTi-2.ttf');
-}
-
 // p5js calls this code once when the page is loaded (and, during development,
 // when the code is modified.)
 export function setup() {
   createCanvas(windowWidth, windowHeight);
-  preload();
   video = select("video") || createCapture(VIDEO);
   video.size(width, height);
 
@@ -122,7 +116,8 @@ if (poses.length > 0){
       // Display the Start, Settings and Exit
       fill(255);
       textAlign(CENTER, CENTER);
-      textFont(tf);
+      // textFont(tf);
+      textFont('Comic Sans MS');
       textSize(30);
       text("Hins: Move your right wrist to choose.", width/2, 20);
       textSize(int(width/10));
@@ -141,7 +136,7 @@ if (poses.length > 0){
         noStroke();
         fill(255, 50);
         rectMode(CENTER);
-        rect(width/2, sizey0 + 10, width*7/8, height/8);
+        rect(width/2, sizey0, width*7/8, height/8);
         remaining = frameCount - timer;
         
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -166,7 +161,7 @@ if (poses.length > 0){
         noStroke();
         fill(0,0,255, 50);
         rectMode(CENTER);
-        rect(width/2, sizey1 + 10, width*7/8, height/8);
+        rect(width/2, sizey1, width*7/8, height/8);
         remaining = frameCount - timer;
         
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -189,7 +184,7 @@ if (poses.length > 0){
         noStroke();
         fill(255, 0, 0, 50);
         rectMode(CENTER);
-        rect(width/2, sizey2 + 10, width*7/8, height/8);
+        rect(width/2, sizey2, width*7/8, height/8);
         remaining = frameCount - timer;
 
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -306,13 +301,11 @@ if (poses.length > 0){
       textSize(int(width/10));
       textAlign(CENTER, CENTER);
       fill(200, 100, 100);
-      textFont(tf);
+      textFont('Comic Sans MS');
       text("The End", width/2, height/3);
       textSize(width/25);
       fill(255);
-      textFont('Georgia')
       text("Score: " + score, width/2, sizey0);
-      textFont(tf);
       text("-Back to Menu-", width/2, sizey1);
       text("-Exit-", width/2, sizey2);
       
@@ -325,7 +318,7 @@ if (poses.length > 0){
         noStroke();
         fill(255, 50);
         rectMode(CENTER);
-        rect(width/2, sizey1 + 10, width*7/8, height/8);
+        rect(width/2, sizey1, width*7/8, height/8);
         remaining = frameCount - timer;
 
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -349,7 +342,7 @@ if (poses.length > 0){
         noStroke();
         fill(255, 0, 0, 50);
         rectMode(CENTER);
-        rect(width/2, sizey2 + 10, width*7/8, height/8);
+        rect(width/2, sizey2, width*7/8, height/8);
         remaining = frameCount - timer;
 
         if (remaining < 160) { // less than 4 seconds, display progress bar
@@ -369,7 +362,7 @@ if (poses.length > 0){
       fill(255);
       textSize(int(width/10));
       textAlign(CENTER, CENTER);
-      textFont(tf);
+      textFont('Comic Sans MS');
       text("Recent Model: " + model, width/2, height/3);      
       textSize(width/25);
       if (model == 1){
@@ -396,7 +389,7 @@ if (poses.length > 0){
           noStroke();
           fill(255, 50);
           rectMode(CENTER);
-          rect(width/2, sizey0 + 10, width*7/8, height/8);
+          rect(width/2, sizey0, width*7/8, height/8);
           remaining = frameCount - timer;
           
           if (remaining < 100) { // less than 4 seconds, display progress bar
@@ -420,7 +413,7 @@ if (poses.length > 0){
           noStroke();
           fill(0,0,255, 50);
           rectMode(CENTER);
-          rect(width/2, sizey1 + 10, width*7/8, height/8);
+          rect(width/2, sizey1, width*7/8, height/8);
           remaining = frameCount - timer;
           
           if (remaining < 100) { // less than 4 seconds, display progress bar
@@ -443,7 +436,7 @@ if (poses.length > 0){
         noStroke();
         fill(255, 0, 0, 50);
         rectMode(CENTER);
-        rect(width/2, sizey2 + 10, width*7/8, height/8);
+        rect(width/2, sizey2, width*7/8, height/8);
         remaining = frameCount - timer;
 
         if (remaining < 100) { // less than 4 seconds, display progress bar
@@ -563,7 +556,7 @@ class Letter {
 
     fill(this.r, this.g, this.b);
     textSize(50);
-    textFont('Georgia');
+    textFont('Comic Sans MS');
     text( this.txt, this.x - 4, this.y + 6);
   }
 
