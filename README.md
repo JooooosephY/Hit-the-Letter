@@ -1,4 +1,4 @@
-## Hit the Letter
+# Hit the Letter
 Producer: Zhao Yang
 
 ## Introduction
