@@ -7,10 +7,14 @@ This is a small game based on Posenet. Basically, the only rule is to hit the le
 ## Instruction
 1. You need to first keep some distances from the screen to let the webcam capture you. 
 2. After you open the website, this is what you'll see. 
-   ![]()
+   ![](https://github.com/JooooosephY/Hit-the-Letter/blob/master/res/screenshot.png)
 3. Once the webcam can capture you and correctly recognize you, there will be two key points on the screen. One follows your right wrist and another one follows your left wrist. It’s easy to distinguish them. 
 4. Move your right wrist point to choose.
 5. Then you can start to play with it. 
+
+## Demo
+
+![]()
 
 
 ## License
