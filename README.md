@@ -12,6 +12,7 @@ This is a small game based on Posenet. Basically, the only rule is to hit the le
 3. Once the webcam can capture you and correctly recognize you, there will be two key points on the screen. One follows your right wrist and another one follows your left wrist. It’s easy to distinguish them. 
 4. Move your right wrist point to choose.
 5. Then you can start to play with it. 
+6. If you try to play but still confused about this game, you can see the demo of how to play by clicking the link below. 
 
 ## Demo
 
