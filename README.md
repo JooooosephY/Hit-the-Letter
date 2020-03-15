@@ -14,9 +14,8 @@ This is a small game based on Posenet. Basically, the only rule is to hit the le
 
 ## Demo
 
-![]()
+[Click to see the demo. ](https://drive.google.com/file/d/1Jo_EArkm7q-uVwl-wn17IL4EvJOoNoqN/view)
 
+## Acknowledgments
 
-## License
-
-MIT License
+Thanks for Professor Minsky and Professor Steele and those who helped me with this project. 
