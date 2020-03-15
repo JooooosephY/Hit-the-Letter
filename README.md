@@ -1,8 +1,9 @@
 # Hit the Letter
+[Hit the Letter](https://joseph-posenet.herokuapp.com/)
 Producer: Zhao Yang
 
 ## Introduction
-This is a small game based on Posenet. Basically, the only rule is to hit the letters by your right wrist or your left wrist in the sequence of alphabet in one minute. The more letters you hit correctly, the more scores you can get. [Hit the Letter](https://joseph-posenet.herokuapp.com/)
+This is a small game based on Posenet. Basically, the only rule is to hit the letters by your right wrist or your left wrist in the sequence of alphabet in one minute. The more letters you hit correctly, the more scores you can get. 
 
 ## Instruction
 1. You need to first keep some distances from the screen to let the webcam capture you. 
