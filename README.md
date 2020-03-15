@@ -1,4 +1,10 @@
-## Hit the Letter, by Zhao Yang
+## Hit the Letter
+Producer: Zhao Yang
+
+## Introduction
+
+
+## Instruction
 
 
 ## License
