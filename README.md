@@ -20,4 +20,5 @@ This is a small game based on Posenet. Basically, the only rule is to hit the le
 
 ## Acknowledgments
 
-Thanks for Professor Minsky and Professor Steele and those who helped me with this project. 
+Thanks for the help from Professor Minsky and Professor Steele.
+And other help with code and UI from classmates: Daisy Chen, Mia Fan, Jannie Zhou
